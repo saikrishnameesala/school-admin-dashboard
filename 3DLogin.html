@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Login & Registration</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:
+                radial-gradient(circle at top left, #6c63ff, transparent 35%),
+                radial-gradient(circle at bottom right, #00d4ff, transparent 35%),
+                #080b1a;
+            overflow: hidden;
+        }
+
+        /* Background 3D circles */
+        body::before,
+        body::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: 0.35;
+        }
+
+        body::before {
+            width: 250px;
+            height: 250px;
+            background: #ff00cc;
+            top: 5%;
+            left: 8%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        body::after {
+            width: 300px;
+            height: 300px;
+            background: #00eaff;
+            bottom: 5%;
+            right: 8%;
+            animation: float 7s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(20deg);
+            }
+        }
+
+        .container {
+            width: 400px;
+            height: 540px;
+            perspective: 1500px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(.4, .2, .2, 1);
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .form-box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 25px 40px;
+            border-radius: 25px;
+
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow:
+                0 30px 70px rgba(0, 0, 0, 0.45),
+                inset 0 1px 1px rgba(255,255,255,0.25);
+
+            color: white;
+
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .register-box {
+            transform: rotateY(180deg);
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 18px;
+            border-radius: 18px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 28px;
+            font-weight: bold;
+
+            background: linear-gradient(135deg, #7c3cff, #00d9ff);
+            box-shadow:
+                0 10px 25px rgba(0, 217, 255, 0.3),
+                inset 0 1px 2px rgba(255,255,255,0.5);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #c7c9dd;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #dfe2ff;
+            font-size: 13px;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box span {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 17px;
+            opacity: 0.8;
+        }
+
+        input {
+            width: 100%;
+            height: 48px;
+            padding: 0 15px 0 45px;
+
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 12px;
+
+            outline: none;
+            color: white;
+            background: rgba(0,0,0,0.20);
+
+            transition: 0.3s;
+        }
+
+        input::placeholder {
+            color: #9296b3;
+        }
+
+        input:focus {
+            border-color: #00d9ff;
+            box-shadow: 0 0 15px rgba(0,217,255,0.2);
+            transform: translateZ(5px);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0 22px;
+            font-size: 12px;
+            color: #c7c9dd;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .remember input {
+            width: auto;
+            height: auto;
+        }
+
+        .options a,
+        .switch a {
+            color: #00d9ff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 12px;
+
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            background: linear-gradient(
+                135deg,
+                #7c3cff,
+                #00c6ff
+            );
+
+            box-shadow:
+                0 10px 25px rgba(0, 198, 255, 0.25);
+
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 15px 30px rgba(0, 198, 255, 0.35);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .switch {
+            text-align: center;
+            margin-top: 25px;
+            color: #bfc2d8;
+            font-size: 13px;
+        }
+
+        .switch a {
+            font-weight: bold;
+            margin-left: 4px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            color: #8589a5;
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .social {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social button {
+            height: 42px;
+            background: rgba(255,255,255,0.08);
+            box-shadow: none;
+            font-size: 13px;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .social button:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+                height: 530px;
+            }
+
+            .form-box {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card" id="card">
+
+            <!-- LOGIN -->
+            <div class="form-box login-box">
+
+                <h1>Welcome Back</h1>
+                <p class="subtitle">Login to continue your journey</p>
+
+                <form id="loginForm">
+
+                    <div class="input-group">
+                        <label>Email Address</label>
+
+                        <div class="input-box">
+                            <span>✉</span>
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+
+                        <div class="input-box">
+                            <span>🔒</span>
+                            <input
+                                type="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="options">
+                        <label class="remember">
+                            <input type="checkbox">
+                            Remember me
+                        </label>
+
+                        <a href="#">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit">LOGIN</button>
+
+                    <div class="divider">OR</div>
+
+                    <div class="social">
+                        <button type="button">Google</button>
+                        <button type="button">Facebook</button>
+                    </div>
+
+                    <div class="switch">
+                        Don't have an account?
+                        <a id="signupBtn">Sign Up</a>
+                    </div>
+
+                </form>
+            </div>
+
+
+            <!-- REGISTER -->
+            <div class="form-box register-box">
+
+                <h1>Create Account</h1>
+                <p class="subtitle">Join us and get started</p>
+
+                <form id="registerForm">
+
+                    <div class="input-group">
+                        <label>Full Name</label>
+
+                        <div class="input-box">
+                            <span>👤</span>
+                            <input
+                                type="text"
+                                placeholder="Enter your name"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email Address</label>
+
+                        <div class="input-box">
+                            <span>✉</span>
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+
+                        <div class="input-box">
+                            <span>🔒</span>
+                            <input
+                                type="password"
+                                placeholder="Create a password"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+
+                        <div class="input-box">
+                            <span>🔐</span>
+                            <input
+                                type="password"
+                                placeholder="Confirm password"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <button type="submit">CREATE ACCOUNT</button>
+
+                    <div class="switch">
+                        Already have an account?
+                        <a id="loginBtn">Login</a>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const card = document.getElementById("card");
+
+        const signupBtn = document.getElementById("signupBtn");
+        const loginBtn = document.getElementById("loginBtn");
+
+        // Flip to registration page
+        signupBtn.addEventListener("click", function () {
+            card.classList.add("flipped");
+        });
+
+        // Flip back to login page
+        loginBtn.addEventListener("click", function () {
+            card.classList.remove("flipped");
+        });
+
+
+        // Login form
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            alert("Login button clicked!");
+        });
+
+
+        // Registration form
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const passwords = this.querySelectorAll('input[type="password"]');
+
+            if (passwords[0].value !== passwords[1].value) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            alert("Registration successful!");
+
+            // Return to login page
+            card.classList.remove("flipped");
+        });
+
+    </script>
+
+</body>
+</html>

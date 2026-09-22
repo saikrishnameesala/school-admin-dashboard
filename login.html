@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+
+    <style>
+        body{
+            background-image:url(backgroundimg.jpg);
+            background-size: cover;
+           background-repeat: no-repeat;
+             background-position: center;
+             background-attachment: fixed;
+             
+        }
+        .c1 {
+            width: 500px;
+            margin: 40px auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            border: 3px solid #f1f1f1;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button,
+        input[type="submit"] {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        button:hover,
+        input[type="submit"]:hover {
+            opacity: 0.8;
+        }
+
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        .password-box {
+            position: relative;
+        }
+
+        .password-box input {
+            padding-right: 40px;
+        }
+
+        .eye {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 600px) {
+            .c1 {
+                width: 90%;
+            }
+
+            span.psw {
+                float: none;
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="c1">
+
+    <h1><b>Log In</b></h1>
+
+    <form onsubmit="return validity();">
+
+        <label for="t1">
+            <b>User Name</b>
+        </label>
+
+        <input
+            type="text"
+            id="t1"
+            name="uname"
+            placeholder="Enter user name"
+        >
+
+        <label id="l3"></label>
+        <br>
+
+        <label for="t2">
+            <b>Password</b>
+        </label>
+
+        <div class="password-box">
+            <input
+                type="password"
+                id="t2"
+                name="Pwd"
+                placeholder="Enter Password"
+            >
+
+            <span class="eye" onclick="togglePassword()">👁‍🗨</span>
+        </div>
+
+        <label id="l4"></label>
+        <br>
+
+        <input type="submit" value="Login">
+
+        <label>
+            <input type="checkbox" name="remember">
+            Remember me
+        </label>
+
+        <div class="container" style="background-color:#f1f1f1">
+
+            <button type="button" class="cancelbtn">
+                Cancel
+            </button>
+
+            <span class="psw">
+                Forgot <a href="#">password?</a>
+            </span>
+
+        </div>
+
+        <label id="D1"></label>
+
+    </form>
+
+</div>
+
+<script>
+
+function togglePassword() {
+
+    const password = document.getElementById("t2");
+
+    if (password.type === "password") {
+        password.type = "text";
+    } else {
+        password.type = "password";
+    }
+}
+
+
+function validity() {
+
+    const name = document.getElementById("t1").value.trim();
+    const pwd = document.getElementById("t2").value;
+
+    const userMessage = document.getElementById("l3");
+    const passwordMessage = document.getElementById("l4");
+    const resultMessage = document.getElementById("D1");
+
+    // Clear previous messages
+    userMessage.innerText = "";
+    passwordMessage.innerText = "";
+    resultMessage.innerText = "";
+
+    // Username validation
+    if (name === "") {
+        userMessage.innerText = "User Name Required";
+        userMessage.style.color = "red";
+        return false;
+    }
+
+    // Password validation
+    if (pwd === "") {
+        passwordMessage.innerText = "Password Required";
+        passwordMessage.style.color = "red";
+        return false;
+    }
+
+    // Login validation
+    if (name === "Sai" && pwd === "123") {
+
+        resultMessage.innerText = "Welcome";
+        resultMessage.style.color = "green";
+
+    } else {
+
+        resultMessage.innerText = "Invalid User";
+        resultMessage.style.color = "red";
+
+    }
+
+    return false;
+}
+
+</script>
+
+</body>
+</html>

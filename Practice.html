@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>College Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #222;
+        }
+
+        header {
+            background-color: rgb(238, 241, 240);
+            color: black;
+            padding: 20px;
+            text-align: center;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 80px;
+
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+      
+        nav {
+            position: fixed;
+            top: 80px;
+            left: 0;
+
+            width: 100%;
+            height: 60px;
+
+            background-color: #63562d;
+
+            z-index: 999;
+        }
+
+        .navbar {
+            height: 60px;
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0 30px;
+        }
+
+        .menu {
+            display: flex;
+
+            list-style: none;
+
+            margin: 0;
+            padding: 0;
+
+            gap: 10px;
+        }
+
+        .menu li a {
+            display: block;
+
+            color: white;
+            text-decoration: none;
+
+            padding: 12px 18px;
+
+            border-radius: 10px;
+
+            transition: 0.3s;
+        }
+
+        .menu li a:hover {
+            background-color: crimson;
+            color: white;
+        }
+
+      
+        main {
+            padding-top: 140px;
+            padding-bottom: 80px;
+        }
+
+        section {
+            min-height: 100vh;
+
+            padding: 100px 50px 50px;
+
+            scroll-margin-top: 140px;
+        }
+
+        section h2 {
+            color: #333;
+
+            border-bottom: 2px solid black;
+
+            padding-bottom: 10px;
+        }
+
+        section h3 {
+            color: #04AA6D;
+        }
+
+        section p {
+            line-height: 1.7;
+        }
+
+       
+        #home {
+            background-color: #f5e6ff;
+        }
+
+        #about {
+            background-color: #e6f7ff;
+        }
+
+        #services {
+            background-color: #e6ffe6;
+        }
+
+        #contact {
+            background-color: #ffe6e6;
+        }
+
+        .school-image {
+            float: right;
+
+            width: 300px;
+            max-width: 40%;
+
+            margin: 0 0 20px 20px;
+
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+
+        .dashboard-cards {
+            display: flex;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+
+            margin: 40px 0;
+        }
+
+        .card {
+            border: 1px solid black;
+
+            width: 200px;
+
+            min-height: 150px;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            background: linear-gradient(
+                135deg,
+                #c8bdec,
+                #a8d8ea,
+                #bdeccf,
+                #f7c5cc
+            );
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: #222;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        
+        .school-images {
+            width: 100%;
+            overflow: hidden;
+            margin: 25px 0 40px;
+            border-radius: 12px;
+        }
+
+        .image-track {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+
+            animation: schoolScroll 40s linear infinite;
+        }
+
+        .image-track img {
+            width: 300px;
+            height: 200px;
+
+            object-fit: cover;
+
+            border-radius: 12px;
+
+            flex-shrink: 0;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes schoolScroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .school-images:hover .image-track {
+            animation-play-state: paused;
+        }
+
+    
+        #login {
+            min-height: 100vh;
+                background-image:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.35),
+                    rgba(0, 0, 0, 0.35)
+                ),
+                url("DNR.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+        }
+
+        #login h2 {
+            color: white;
+
+            text-align: center;
+
+            border-bottom: 2px solid white;
+
+            padding-bottom: 10px;
+
+            width: 100%;
+            max-width: 700px;
+
+            margin-bottom: 20px;
+        }
+
+       
+        .login-box {
+            width: 400px;
+            max-width: 90%;
+
+            margin: 30px auto;
+
+            padding: 35px;
+
+            background: rgba(0, 0, 0, 0.35);
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            border: 1px solid rgba(255, 255, 255, 0.5);
+
+            border-radius: 20px;
+
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+            color: white;
+        }
+
+        .login-box label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+        }
+
+        .login-box input {
+            width: 100%;
+
+            padding: 12px;
+
+            margin-bottom: 18px;
+
+            background: rgba(255, 255, 255, 0.85);
+
+            border: 1px solid white;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        .login-box input:focus {
+            border: 2px solid crimson;
+
+            background-color: white;
+        }
+
+       
+        .login-box button {
+            width: 100%;
+
+            padding: 12px;
+
+            background-color: crimson;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .login-box button:hover {
+            background-color: darkred;
+
+            transform: scale(1.02);
+        }
+
+        footer {
+            background-color: aquamarine;
+
+            color: black;
+
+            text-align: center;
+
+            padding: 15px;
+        }
+
+
+
+        @media (max-width: 768px) {
+
+            header {
+                position: static;
+
+                height: auto;
+
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            nav {
+                position: static;
+
+                height: auto;
+            }
+
+            .navbar {
+                height: auto;
+
+                padding: 10px;
+            }
+
+            .menu {
+                flex-direction: column;
+
+                width: 100%;
+
+                gap: 5px;
+            }
+
+            .menu li {
+                width: 100%;
+
+                text-align: center;
+            }
+
+            .menu li a {
+                width: 100%;
+            }
+
+            main {
+                padding-top: 0;
+            }
+
+            section {
+                min-height: auto;
+
+                padding: 50px 20px;
+                scroll-margin-top: 0;
+            }
+
+            .school-image {
+                float: none;
+
+                display: block;
+
+                width: 100%;
+
+                max-width: 100%;
+
+                margin: 20px auto;
+            }
+
+            .dashboard-cards {
+                flex-direction: column;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            #login {
+                min-height: 100vh;
+
+                padding: 60px 20px;
+            }
+
+            #login h2 {
+                font-size: 24px;
+            }
+
+            .login-box {
+                width: 100%;
+
+                max-width: 400px;
+
+                padding: 25px;
+            }
+
+            .image-track img {
+                width: 220px;
+                height: 150px;
+            }
+
+            .image-track {
+                gap: 12px;
+            }
+        } 
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>College Dashboard</h1>
+    </header>
+
+    <nav class="navbar">
+
+        <ul class="menu">
+
+            <li>
+                <a href="#home">Home</a>
+            </li>
+
+            <li>
+                <a href="#about">About</a>
+            </li>
+
+            <li>
+                <a href="#services">Services</a>
+            </li>
+
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
+
+            <li>
+                <a href="#login">Admission</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    
+    <main>
+
+        <section id="home">
+
+            <h2>My School</h2>
+
+            <img
+                src="DNR.jpg"
+                alt="School Building"
+                class="school-image"
+            >
+
+            <p>
+                The College Dashboard provides a centralized platform
+                for managing and monitoring all major activities of the College.
+                It gives administrators a clear overview of students, teachers,
+                classes, attendance, academics, fees, events, and other important
+                College operations in one convenient place.
+            </p>
+
+            <p>
+                The dashboard displays essential statistics such as total
+                students, total teachers, active classes, attendance percentage,
+                pending fees, and upcoming events. These quick insights help
+                administrators understand the current status of the school and
+                make informed decisions without having to navigate through
+                multiple sections.
+            </p>
+
+            <div class="dashboard-cards">
+
+                <div class="card">
+
+                    <h3>Students</h3>
+
+                    <p>500+</p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Teachers</h3>
+
+                    <p>50+</p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Classes</h3>
+
+                    <p>25</p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Attendance</h3>
+
+                    <p>95%</p>
+
+                </div>
+                <ul style="display: -moz-marker;">
+                 
+                    <li>BTech(CSC,MECH,AI,Civil,Automobile)</li>
+                    <li>BSC(MPC,MPCS,BCom,BZC)</li>
+                    <li>MCA</li>
+                    <li>MSc(Chemistry,physics,Electronics,Maths,Computer Science)</li>
+                    <li>MCom</li>
+                    <li>MBA</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+      
+        <section id="about">
+
+            <h2>About</h2>
+
+           
+            <div class="school-images">
+
+                <div class="image-track">
+
+                    <img
+                        src="DNR.jpg"
+                        alt="School Building"
+                    >
+
+                    <img
+                        src="Dnr2.webp"
+                        alt="Campus"
+                    >
+
+                    <img
+                        src="Dnr3.webp"
+                        alt="School Classroom"
+                    >
+
+                  
+                    <img
+                        src="DNR.jpg"
+                        alt="School Building"
+                    >
+
+                    <img
+                        src="Dnr2.webp"
+                        alt="Campus"
+                    >
+
+                    <img
+                        src="Dnr3.webp"
+                        alt="School Classroom"
+                    >
+
+                </div>
+
+            </div>
+
+            <h3>Student Management</h3>
+
+            <p>
+                The Student Management section allows administrators to add,
+                update, and manage student information. Admins can view student
+                profiles, admission details, class assignments, attendance
+                records, academic performance, and parent or guardian information.
+            </p>
+
+            <h3>Teacher &amp; Staff Management</h3>
+
+            <p>
+                Administrators can manage teachers and other college staff through
+                the dashboard. They can view staff profiles, assign teachers to
+                classes or subjects, monitor attendance, manage responsibilities,
+                and keep track of staff-related information.
+            </p>
+
+            <h3>Events &amp; Calendar</h3>
+
+            <p>
+                The Events section provides a calendar for managing upcoming
+                college activities. Administrators can schedule examinations,
+                parent-teacher meetings, college functions, holidays,
+                competitions, workshops, and other important events.
+            </p>
+
+        </section>
+
+        <section id="services">
+
+            <h2>Services</h2>
+
+            <h3>Attendance Management</h3>
+
+            <p>
+                The Attendance section provides an overview of daily student
+                and staff attendance. Administrators can monitor attendance
+                by class, identify students with frequent absences, and review
+                attendance reports for specific dates or periods.
+            </p>
+
+            <h3>Academic Management</h3>
+
+            <p>
+                The Academic Management area allows administrators to organize
+                classes, subjects, examinations, assignments, and academic
+                results. Admins can monitor student performance, manage
+                examination schedules, publish results, and review academic
+                progress.
+            </p>
+
+            <h3>Reports &amp; Analytics</h3>
+
+            <p>
+                The Reports and Analytics section provides detailed information
+                about college performance and operations. Administrators can
+                generate reports for attendance, student enrollment, academic
+                results, fees, staff, and other activities.
+            </p>
+
+            <h3>Quick Actions</h3>
+
+            <p>
+                The dashboard can provide quick-action buttons for frequently
+                used tasks such as Add Student, Add Teacher, Mark Attendance,
+                Create Announcement, Schedule Exam, Collect Fees, and
+                Generate Report.
+            </p>
+
+        </section>
+
+       <section id="contact">
+
+            <h2>Contact</h2>
+
+            <h3>Fees &amp; Finance</h3>
+
+            <p>
+                The Fees and Finance section helps administrators manage student
+                fee payments and outstanding balances. It can display collected
+                fees, pending payments, payment history, invoices, and financial
+                summaries.
+            </p>
+
+            <h3>Announcements &amp; Communication</h3>
+
+            <p>
+                The dashboard includes an announcements and communication area
+                where administrators can share important information with
+                students, teachers, and parents. Notifications may include
+                holidays, examination schedules, meetings, events, and academic
+                updates.
+            </p>
+
+            <h3>Overall</h3>
+
+            <p>
+                The College Dashboard is designed to simplify school
+                administration by bringing essential information and management
+                tools into a single system. It improves organization, saves
+                administrative time, supports better communication, and helps
+                college administrators manage daily operations more effectively.
+            </p>
+
+            <h3>Contact Information</h3>
+
+            <p>
+                Email: college@example.com
+            </p>
+
+            <p>
+                Phone: +91 98765 43210
+            </p>
+
+        </section>
+
+        <section id="login">
+
+            <h2>Request For Admission</h2>
+
+            <div class="login-box">
+
+                <form>
+
+                    <label for="name">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                    <label for="phone">
+                        Phone
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="Enter mobile number"
+                        required
+                    >
+
+                    <button type="submit">
+                        Submit
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        &copy; 2026 All Rights Reserved - Sai Krishna
+
+    </footer>
+
+</body>
+
+</html>
